@@ -14,6 +14,7 @@ App.set('view-engine', 'ejs'); //ejs
 env.config({path:'./private.env'}) //env
 
 //Mongoose Data / ENV Data====>
+
 let Users  = mongoose.model('UserData',{
     First_Name:String,
     Last_Name:String,
@@ -22,13 +23,29 @@ let Users  = mongoose.model('UserData',{
     Phone:Number,
     Password:String,
 });
+
 const PORT = process.env.PORT;
 const MONGODB_API = process.env.MONGOCONNECT;
 
-//Route Definitions========================>
+async function fetchEData() {
+    try {
+        await Users.find({})
+        console.log(`Fetched User's Data Successfully!`)
+    } catch (error) {
+        console.log(`Something went wrong in Data Fetching, Error Message: ${error} `)
+    }
+}
 
+//Route Definitions========================>
+//Health Api------->>
+App.get('/health' , (req,res) =>{
+    res.json({
+        Message:'Server is running !!'
+    })
+})
 //Default Routes==========================>
 App.listen(PORT,'0.0.0.0' ,async (req,res) =>{
+
     //Mongoose Connections==>
     mongoose.connect(MONGODB_API,{
         dbName : 'JobPortal'
@@ -36,13 +53,9 @@ App.listen(PORT,'0.0.0.0' ,async (req,res) =>{
     .catch((error)=>{
         console.log(`Something went wrong, Error Message: ${error} `)
     })
+
     //Load Existing Data from DB
-    try {
-        await Users.find({})
-        console.log(`Fetched User's Data Successfully!`)
-    } catch (error) {
-        console.log(`Something went wrong in Data Fetching, Error Message: ${error} `)
-    }
+    fetchEData();
 
     console.log("SERVER IS UP AND RUNNING!")
 })
