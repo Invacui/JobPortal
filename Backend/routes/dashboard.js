@@ -1,6 +1,4 @@
 const express = require('express');
-const mongoose = require('Mongoose');
-const Users = require('../models/Users');
 const IsLoggedIn = require("../middleware/authcheck");
 
 const dash = express.Router();

@@ -6,6 +6,7 @@ const cors = require('cors')
 const dataservices = require('./dataservices/dataservices');
 const  authroutes  = require('./routes/auth');
 const dash = require('./routes/dashboard')
+const jobp = require('./routes/jobdesc')
 
 //Defining Packages======================>
 
@@ -21,6 +22,7 @@ App.use(bodyparser.urlencoded({extended:false}));  //bodyparser
 App.use(express.json());
 App.use('/auth' , authroutes);
 App.use('/username' , dash)
+App.use('/jobpost' , jobp)
 
 //ENV Data====>
 

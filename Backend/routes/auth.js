@@ -52,13 +52,13 @@ async function loginvalidator(email , password) {
 //Handlers
 router.post('/signup', async (req, res) => {
     console.log(req.body);
-    const { fname, lname, email, phone, password, cpass } = req.body;
+    const { fname, lname, email, phone, password, cpass , usertype} = req.body;
     //Bcrypt
     const hashed_password = await bcrypt.hash(password , 10);
     try {
         const conditionsres = await checkcondtions( email, phone, password, cpass);
         if (conditionsres) {
-            const firstuser = await Users.create({ First_Name: fname, Last_Name: lname,  Email: email, Phone: phone, Password: hashed_password, IsPremium: false});
+            const firstuser = await Users.create({ First_Name: fname, Last_Name: lname,  Email: email, Phone: phone, Password: hashed_password, IsPremium: false , IsRecruiter : usertype});
             const jwttokengen = jwttoken.sign(firstuser.toJSON() , "Samvirk" , {expiresIn:120})
             res.status(200).json({
                 Message: 'User created successfully',
@@ -81,7 +81,7 @@ router.post('/login' , async (req,res) =>{
         const {email , password} = req.body;
         console.log(email)
         const loguser = await loginvalidator(email,password);
-        const jwttokengen = jwttoken.sign(loguser.toJSON() , "Samvirk" , {expiresIn:120})
+        const jwttokengen = jwttoken.sign(loguser.toJSON() , "Samvirk" , {expiresIn:1200})
         res.status(200).json({
             message:'Login Successfull',
             jwttokengen

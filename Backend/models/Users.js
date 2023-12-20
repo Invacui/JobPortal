@@ -15,7 +15,7 @@ const UsersSchema = new mongoose.Schema({
         unique: true,
     },
     Phone: {
-        type: Number,
+        type: String,
         required: true,
         unique: true,
     },
@@ -23,10 +23,19 @@ const UsersSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    IsRecruiter:{
+        type:Boolean,
+        required:true,
+    },
     IsPremium: {
         type: Boolean,
         required: true,
     },
+    jobsPosted: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Job',
+        required: true,
+      }],
 });
 
 module.exports = mongoose.model("UserData", UsersSchema);
