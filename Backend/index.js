@@ -7,7 +7,7 @@ const dataservices = require('./dataservices/dataservices');
 const  authroutes  = require('./routes/auth');
 const dash = require('./routes/dashboard')
 const jobp = require('./routes/jobdesc')
-
+const jobController = require('./routes/filter_jobs')
 //Defining Packages======================>
 
 const App = express(); //App Declaration
@@ -23,10 +23,11 @@ App.use(express.json());
 App.use('/auth' , authroutes);
 App.use('/username' , dash)
 App.use('/jobpost' , jobp)
-
+App.use('/jobsfilter', jobController);
+ 
 //ENV Data====>
 
-const PORT = process.env.PORT; 
+const PORT = process.env.PORT || 3000; 
 const MONGODB_API = process.env.MONGOCONNECT;
 
 //Route Definitions========================>

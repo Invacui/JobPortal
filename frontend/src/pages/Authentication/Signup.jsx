@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import handleFormSubmit from "../../components/form_handler"
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    fname: '',
-    lname: '',
-    email: '',
-    phone: '',
-    password: '',
-    cpass: '',
+    fname: "",
+    lname: "",
+    email: "",
+    phone: "",
+    password: "",
+    cpass: "",
   });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleFormSubmit(
+      'http://localhost:3001/auth/signup',
+      'POST',
+      formData,
+      'User created successfully!',
+      () => navigate('/username/dashboard')
+    );
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,72 +34,87 @@ const Signup = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(formData);
-    try {
-      const response = await fetch('http://localhost:3000/Signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', // Change the content type to JSON
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        toast.success('User created successfully!', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      } else {
-        const data = await response.json();
-        toast.error(data.Message, {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error('Internal server error. Please try again later.', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    }
+  const handle_SignIn = () => {
+    navigate("/auth/login");
   };
-
   return (
-    <div className='Signupbody_main'>
-      <form onSubmit={handleSubmit}>
-        {/* Your form fields go here, for example: */}
-        <label>First Name:</label>
-        <input type='text' name='fname' value={formData.fname} onChange={handleChange} />
-        <label>Lname:</label>
-        <input type='text' name='lname' value={formData.lname} onChange={handleChange} />
-        <label>Email:</label>
-        <input type='email' name='email' value={formData.email} onChange={handleChange} />
-        <label>Phone:</label>
-        <input type='text' name='phone' value={formData.phone} onChange={handleChange} maxLength='10'/>
-        <label>Pass:</label>
-        <input type='password' name='password' value={formData.password} onChange={handleChange} />
-        <label>Cpass</label>
-        <input type='password' name='cpass' value={formData.cpass} onChange={handleChange} />
-
-        {/* Repeat similar fields for other form inputs */}
-
-        <button type='submit'>Signup</button>
-      </form>
+    <div className="Signupbody_main">
+      <div className="form_heading_s">
+        <h1>Create an account</h1>
+        <p className="secheading">Your personal job finder is here</p>
+      </div>
+      <div className="form_body_s">
+        <form onSubmit={handleSubmit}>
+          {/* Your form fields go here, for example: */}
+          <label>First Name:</label>
+          <br />
+          <input
+            type="text"
+            name="fname"
+            value={formData.fname}
+            onChange={handleChange}
+          />
+          <br />
+          <label>Lname:</label>
+          <br />
+          <input
+            type="text"
+            name="lname"
+            value={formData.lname}
+            onChange={handleChange}
+          />
+          <br />
+          <label>Email:</label>
+          <br />
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <br />
+          <label>Phone:</label>
+          <br />
+          <input
+            type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            maxLength="10"
+          />
+          <br />
+          <label>Pass:</label>
+          <br />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <br />
+          <br />
+          <input type="radio" name="usertype" id="usertype" />
+          <label for="usertype">Are you a Recuriter?</label>
+          <br />
+          <input type="checkbox" name="first_checkbox" id="first_checkbox" />
+          <label htmlFor="first_checkbox">
+            By creating an account, I agree to our terms of use and privacy
+            policy
+          </label>
+          <br />
+          <br />
+          {/* Repeat similar fields for other form inputs */}
+          <button type="submit">Signup</button>
+          <p className="secheading">
+            Already have an account?&nbsp;{" "}
+            <span onClick={handle_SignIn}>
+              <u>
+                <b>Sign In</b>
+              </u>
+            </span>
+          </p>
+        </form>
+      </div>
 
       <ToastContainer />
     </div>

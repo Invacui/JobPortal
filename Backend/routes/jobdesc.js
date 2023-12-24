@@ -4,9 +4,9 @@ const IsLoggedIn = require("../middleware/authcheck");
 
 const jobroute = express.Router();
 jobroute.get("/addJob", IsLoggedIn, (req, res) => {
-  res.send({
-    message: "Job_post working!",
-  });
+  res.json({
+    Message: "Job_post working!"
+  }); 
 });
 jobroute.post("/addJob",IsLoggedIn, async (req, res) => {
   console.log(req.body);
@@ -27,6 +27,11 @@ jobroute.post("/addJob",IsLoggedIn, async (req, res) => {
   //Bcrypt
   try {
     const user = req.user; //assumes that req.user is being set by the IsLoggedIn middleware, and it updates the jobsPosted array in the user document when a job is successfully posted.
+    if(!companyName){
+      return res.status(400).json({    
+        Message: 'Please fill out the form correctly. All fields are required.',
+    });
+    }
     const firstuser = await Jobprop.create({
       companyName,
       logoUrl,
@@ -54,6 +59,7 @@ jobroute.post("/addJob",IsLoggedIn, async (req, res) => {
     res.status(400).json({
       Message: `Error creating Job: ${error.message}`,
     });
+    throw new Error(error.message)
   }
 });
 //Update Job Post
