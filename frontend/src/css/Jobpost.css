@@ -1,0 +1,88 @@
+.jobpost_main_body{
+    border: 2px solid yellow;
+    height: 100vh;
+    padding: 2vh 5vw;
+    background-image: url("../asset/jobback.png");
+    background-repeat: no-repeat;
+    background-size: 40% 100%;
+    background-position: right;
+}
+.jobpost_main_body h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+.jobpostformdiv{
+    display: flex;
+    border: 4px solid red;
+    width: fit-content;
+    position: relative;
+}
+.buttonscontainer{
+    direction: rtl;
+}
+ .txtarea td{
+vertical-align: top;
+}
+.jobpostformdiv label{
+display: block;
+margin-bottom: 10px;
+margin-right: 20px;
+color: #000;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 18px;
+font-weight: 500;
+}
+.jobpostformdiv input,select,textarea{
+border-radius: 4.603px;
+border: 1.841px solid #C2C2C2;
+background: #FFF;
+resize: none;
+margin-bottom: 20px; 
+}
+.jobpostformdiv input{
+width: 438.233px;
+padding : 0.7em;
+flex-shrink: 0;
+border-radius: 4.603px;
+border: 1.841px solid #C2C2C2;
+background: #FFF;
+}
+.jobpostformdiv input[type=text]::placeholder{
+    font-size: 12px;
+    color: #ADADAD;
+}
+.jobpostformdiv select{
+text-align: center;
+color: #ADADAD;
+padding: 0.4em;
+font-size: large;
+font-family: Arial, Helvetica, sans-serif;
+width: 136.257px;
+border-radius: 4.603px;
+border: 1.841px solid #C2C2C2;
+}
+.jobpostformdiv textarea{
+    width: 438.233px;
+    height: 60px;
+    padding : 0.7em;
+}
+#jobpostsubmit{
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    color: #FFF;
+    background-color: red;
+    border: 1px solid red;
+    padding:0.5em 2em;
+    border-radius: 5px;
+
+}
+#jobpostcancel{
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    border: 1px solid #CECECE;
+    padding:0.5em 2em;
+    border-radius: 5px;
+
+}

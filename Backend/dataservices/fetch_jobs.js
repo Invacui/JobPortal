@@ -1,9 +1,9 @@
-const Users = require('../models/Users');
+const Job = require('../models/Jobprop');
 
 async function fetchEData() {
     try {
-        await Users.find({})
         console.log(`Fetched User's Jobs Successfully!`)
+        return await Job.find({})
     } catch (error) {
         console.log(`Something went wrong in Data Fetching, Error Message: ${error} `)
     }

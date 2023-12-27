@@ -3,10 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import handleFormSubmit from "../../components/form_handler"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import "../../css/Jobpost.css"
 const JobPost = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const initialFormData = {     //reset the form
+    companyName: '', 
+    logoUrl: '',
+    jobPosition: '',
+    monthlySalary: 0,
+    jobType: '',
+    remoteOrOffice: '',
+    location: '',
+    jobDescription: '',
+    aboutCompany: '',
+    skills: [],
+    info: '',
+  };
   const [formData, setFormData] = useState({
     companyName: '',
     logoUrl: '',
@@ -20,6 +34,7 @@ const JobPost = () => {
     skills: [],
     info: '',
   });
+  const isFormDataEmpty = Object.values(formData).every(value => value === '' || value === 0 || value.length === 0); //check if the form is empty or not
   useEffect(() => {
     const checkUserAuthorization = async () => {
       try {
@@ -34,7 +49,9 @@ const JobPost = () => {
 
         if (!response.ok) {
           throw new Error('User not authorized');
+          setIsAuthenticated(false);
         }
+        setIsAuthenticated(true);
         setLoading(false);
         // If the user is authorized, continue with the component rendering
       } catch (error) {
@@ -81,52 +98,81 @@ if (loading) {
       }
 
   return (
-    <div>
-      <h2>Job Post Form</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Company Name:</label><br />
-        <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} /><br / >
+    <div className="jobpost_main_body">
+      <span>
+        <h1 style={{color:"#FFF"}} dir='rtl'>Recruiter add job details here</h1>
+        <h1>Add job description</h1>
+      </span>
+      <div className="jobpostformdiv">
+      <form onSubmit={handleSubmit} id="jobpostform">
+  <table>
+    <tbody>
+      <tr>
+        <td><label htmlFor="companyName">Company Name</label></td>
+        <td><input type="text" id="companyName" name="companyName" value={formData.companyName} onChange={handleChange} placeholder="Enter your company name here"/></td>
+      </tr>
+      <tr>
+        <td><label htmlFor="logoUrl">Add logo URL</label></td>
+        <td><input type="text" id="logoUrl" name="logoUrl" value={formData.logoUrl} onChange={handleChange} placeholder="Enter the link" /></td>
+      </tr>
+      <tr>
+        <td><label htmlFor="jobPosition">Job Position</label></td>
+        <td><input type="text" id="jobPosition" name="jobPosition" value={formData.jobPosition} onChange={handleChange} placeholder="Enter job position"/></td>
+      </tr>
+      <tr>
+        <td><label htmlFor="monthlySalary">Monthly Salary</label></td>
+        <td><input type="number" id="monthlySalary" name="monthlySalary" value={formData.monthlySalary} onChange={handleChange} /></td>
+      </tr>
+      <tr>
+        <td><label htmlFor="jobType">Job Type</label></td>
+        <td>
+          <select id="jobType" name="jobType" value={formData.jobType} onChange={handleChange}>
+            <option value="">Select </option>
+            <option value="part-time">Part-time</option>
+            <option value="full-time">Full-time</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label htmlFor="remoteOrOffice">Remote / Office</label></td>
+        <td>
+          <select id="remoteOrOffice" name="remoteOrOffice" value={formData.remoteOrOffice} onChange={handleChange}>
+            <option value="">Select</option>
+            <option value="wfh">WF</option>
+            <option value="office">Office</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label htmlFor="location">Location</label></td>
+        <td><input type="text" id="location" name="location" value={formData.location} onChange={handleChange} placeholder="Enter Amount in rupees"/></td>
+      </tr>
+      <tr className="txtarea">
+        <td><label htmlFor="jobDescription">Job Description</label></td>
+        <td><textarea id="jobDescription" name="jobDescription" value={formData.jobDescription} onChange={handleChange} placeholder="Type the job description"></textarea></td>
+      </tr>
+      <tr className="txtarea">
+        <td><label htmlFor="aboutCompany">About Company</label></td>
+        <td><textarea id="aboutCompany" name="aboutCompany" value={formData.aboutCompany} onChange={handleChange} placeholder="Type about your company"></textarea></td>
+      </tr>
+      <tr>
+        <td><label htmlFor="skills">Skills Required</label></td>
+        <td><input type="text" id="skills" name="skills" value={formData.skills.join(',')} onChange={handleChange} placeholder="Enter the must have skills"/></td>
+      </tr>
+      <tr>
+        <td><label htmlFor="info">Information</label></td>
+        <td><input type="text" id="info" name="info" value={formData.info} onChange={handleChange} placeholder="Enter the additional information"></input></td>
+      </tr>
+    </tbody>
+  </table>
 
-        <label>Logo URL:</label><br />
-        <input type="text" name="logoUrl" value={formData.logoUrl} onChange={handleChange} /><br / >
+  <div className="buttonscontainer">
+    <button type="submit" id="jobpostsubmit" dir='ltr'>+ Add Job</button>&emsp;
+    <button type="submit" id="jobpostcancel" onClick={() => setFormData(initialFormData)} disabled={isFormDataEmpty}>Cancel</button>
+  </div>
+</form>
 
-        <label>Job Position:</label><br />
-        <input type="text" name="jobPosition" value={formData.jobPosition} onChange={handleChange} /><br / >
-
-        <label>Monthly Salary:</label><br />
-        <input type="number" name="monthlySalary" value={formData.monthlySalary} onChange={handleChange} /><br / >
-
-        <label>Job Type:</label><br />
-        <select name="jobType" value={formData.jobType} onChange={handleChange}>
-          <option value="">Select Job Type</option>
-          <option value="part-time">Part-time</option>
-          <option value="full-time">Full-time</option>
-        </select><br />
-
-        <label>Remote or Office:</label><br />
-        <select name="remoteOrOffice" value={formData.remoteOrOffice} onChange={handleChange}>
-          <option value="">Select Remote or Office</option>
-          <option value="wfh">Work from Home</option>
-          <option value="office">Office</option>
-        </select><br />
-
-        <label>Location:</label><br />
-        <input type="text" name="location" value={formData.location} onChange={handleChange} /><br / >
-
-        <label>Job Description:</label><br />
-        <textarea name="jobDescription" value={formData.jobDescription} onChange={handleChange}></textarea>
-        <br />
-        <label>About Company:</label><br />
-        <textarea name="aboutCompany" value={formData.aboutCompany} onChange={handleChange}></textarea>
-        <br />
-        <label>Skills:</label><br />
-        <input type="text" name="skills" value={formData.skills.join(',')} onChange={handleChange} /><br / >
-
-        <label>Info:</label><br />
-        <textarea name="info" value={formData.info} onChange={handleChange}></textarea>
-        <br />
-        <button type="submit">Post Job</button>
-      </form>
+      </div>
 
       <ToastContainer />
     </div>
