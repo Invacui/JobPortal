@@ -1,59 +1,36 @@
-import React, { useState,useEffect } from 'react'
-
+import React , { useState, useEffect } from "react";
+import Joblist from "../../components/Dashboard/Joblist";
+import Searchbox from "../../components/Dashboard/Searchbox";
+import Navbar from "../../components/navBar/Navbar";
 const Dashboard = () => {
+  const [jobs, setJobs] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        setIsAuthenticated(true);
+        return;
+      }
+      setIsAuthenticated(false);
 
-    const [jobData, setJobData] = useState([]);
-
-    const fetchJobData = async () => {
-        try {
-            const response = await fetch('http://localhost:3001/username/dashboard/', {
-                method: 'GET', // Method type
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+    },[]);
     
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-    
-            const data = await response.json();
-            console.log('Data from server:', data);
-            setJobData(data.datajob);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-    
-    useEffect(() => {
-        fetchJobData();
-    }, []);
+  const handleSearch = (searchedJobs) => {
+    setJobs(searchedJobs);
+    console.log('parent joblist=>',jobs)
+  };
+  
+  return (
+    <div className="joblistandsearch_main">
+      <div className="joblistnav">
+        <Navbar isAuthenticated={isAuthenticated}/>
+      </div>
+      <div className="joblistandsearch">
+        <Searchbox onSearch={handleSearch} isAuthenticated={isAuthenticated} />
+        <Joblist jobs={jobs} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+      </div>
+    </div>
+  );
+};
 
-    return (
-        <div>
-            {jobData.length === 0 ? (
-                <p>No jobs available.</p>
-            ) : (
-                jobData.slice(0, 3).map((job, index) => (
-                    <div key={index}>
-                        <h2>{job.jobPosition}</h2>
-                        <p>{job.remoteOrOffice}</p>
-                        <p>{job.jobType}</p>
-                        <p>{job.monthlySalary}</p>
-                        <p>{job.location}</p>
-                        <div className="skillsetbox">
-                            {job.skills.map((skill , indexone) =>(
-                                <span key={indexone}>{skill}</span>
-                            ))}
-                        </div>
-                        </div>
-                        ))
-                    )
-                    }
-                </div>
-            );
-        };
-
-export default Dashboard
-
-
+export default Dashboard;

@@ -4,7 +4,7 @@ import Signup from './pages/Authentication/Signup';
 import Login from './pages/Authentication/Login'
 import Jobpost from './pages/JobPost/JobPost'
 import Dashboard from './pages/Dashboard/Dashboard';
-import Navbar from './components/navBar/Navbar';
+import Searchbox from './components/Dashboard/Searchbox';
 function App() {
   return (
     <Routes>
@@ -12,7 +12,7 @@ function App() {
       <Route path ="/auth/login" element={<Login/>} />
       <Route path ="/jobpost/addJob" element={<Jobpost/>} />
       <Route path ="/dashboard" element={<Dashboard />} />
-      <Route path ="/" element={<Navbar />} />
+      <Route path ="/" element={<Searchbox />} />
     </Routes>
   );
 }

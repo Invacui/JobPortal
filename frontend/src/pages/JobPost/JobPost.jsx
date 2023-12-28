@@ -89,7 +89,7 @@ const JobPost = () => {
         'POST',
         formData,
         'Posted Job successfully!',
-        () => navigate('/username/dashboard'),
+        () => navigate('/dashboard'),
         true
       );
     };
@@ -157,7 +157,7 @@ if (loading) {
       </tr>
       <tr>
         <td><label htmlFor="skills">Skills Required</label></td>
-        <td><input type="text" id="skills" name="skills" value={formData.skills.join(',')} onChange={handleChange} placeholder="Enter the must have skills"/></td>
+        <td><input type="text" id="skills" name="skills" value={formData.skills} onChange={handleChange} placeholder="Enter the must-have skills" /></td>
       </tr>
       <tr>
         <td><label htmlFor="info">Information</label></td>

@@ -1,34 +1,28 @@
-// jobController.js
-
 const express = require('express');
-const Jobprop = require('../models/Jobprop');
+const Job = require('../models/Jobprop');
 
 const jobController = express.Router();
 
-jobController.get('/listJobs', async (req, res) => {
+jobController.post('/search', async (req, res) => {
   try {
-    const { skills, jobTitle } = req.query;
+    console.log(req.body)
+    const { jobPosition, skills } = req.body;
+    let query = {};
 
-    // Build the filter object based on the provided parameters
-    const filter = {};
-    if (skills) {
-      filter.skills = { $in: skills.split(',') }; // Assuming skills are comma-separated
-    }
-    if (jobTitle) {
-      filter.jobPosition = { $regex: new RegExp(jobTitle, 'i') }; // Case-insensitive regex match
+    if (jobPosition) {
+      query.jobPosition = jobPosition;
     }
 
-    // Retrieve jobs based on the filter
-    const jobs = await Jobprop.find(filter);
+    if (skills && Array.isArray(skills) && skills.length > 0) {
+      // Use $all to match jobs that contain all selected skills
+      query.skills = { $all: skills };
+    }
 
-    res.status(200).json({
-      Message: 'Jobs retrieved successfully',
-      Jobs: jobs,
-    });
+    const jobs = await Job.find(query).limit(3);
+    res.json({ jobs });
   } catch (error) {
-    res.status(400).json({
-      Message: `Error listing jobs: ${error.message}`,
-    });
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
