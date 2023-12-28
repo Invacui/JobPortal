@@ -1,43 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React ,{useState,useEffect}from 'react'
+import JobDesc from '../../components/JobView/JobDesc'
+import Navbar from '../../components/navBar/Navbar'
 const JobView = () => {
-    const { id } = useParams();
-    const [job, setJob] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        setIsAuthenticated(true);
+        return;
+      }
+      setIsAuthenticated(false);
   
-    useEffect(() => {
-      const fetchJobDetails = async () => {
-        try {
-          const response = await fetch(`http://localhost:3001/jobpost/${id}`);
-          if (!response.ok) {
-            throw new Error('Failed to fetch job details');
-          }
-  
-          const data = await response.json();
-          setJob(data.job);
-        } catch (error) {
-          console.error('Error fetching job details:', error);
-        }
-      };
-  
-      fetchJobDetails();
-    }, [id]);
-  
-    return (
-      <div>
-        {job ? (
-          <div>
-            <h2>{job.jobPosition}</h2>
-            <p>Company: {job.companyName}</p>
-            <p>Salary: {job.monthlySalary}</p>
-            {/* Add more details as needed */}
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    );
-  };
-  
-
+    },[]);
+  return (
+    <div className='jobviewmainbody'>
+      <Navbar isAuthenticated={isAuthenticated}/>
+      <JobDesc isAuthenticated={isAuthenticated}/>
+    </div>
+  )
+}
 
 export default JobView

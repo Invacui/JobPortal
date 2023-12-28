@@ -1,0 +1,57 @@
+.jobviewmainbody{
+    background-color:#FFEFEF ;
+    height: 100vh;
+}
+.JobViewBodySubMain{
+    position: relative;
+    top: -30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid red;
+    width: auto;
+    height: 85vh;
+}
+#JobViewBodySubone{
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    background-color: #FFF;
+    padding: 1.5em 5em ;
+    height: fit-content;
+}
+#JobViewBodySubtwo{
+    width:70%;
+    margin-top: 30px;
+    background-color: #FFF;
+    padding: 1.5em 2em ;
+    height: fit-content;
+}
+.headingviewjob {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 0;
+    border: 3px solid black;
+}
+.headingviewjob button{
+    height: fit-content;
+}
+.tble td{ padding-right: 10px;
+padding-top: 5px;}
+.notcalsvg{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+#viewjobskills{
+    background-color: #FFEFEF;
+    margin-right: 5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 0.2em 0.8em;
+}
+.veiwdetails.hidden{
+    display: none;
+}

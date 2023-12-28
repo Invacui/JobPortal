@@ -9,7 +9,14 @@ const Navbar = ({isAuthenticated}) => {
     console.log("isAuthenticated changed:", isAuthenticated);
   }, [isAuthenticated]);
  
-
+  const handleSignOut = () => {
+    // Clear the token from local storage
+    localStorage.removeItem('token');
+    // Optionally, perform additional logout logic if needed
+    console.log('Logged out successfully!');
+    // Redirect to the login page or any other desired page
+    navigate('/auth/login');
+  };
   function handleloginbtn() {
     navigate("/auth/login/")
   }
@@ -25,7 +32,7 @@ const Navbar = ({isAuthenticated}) => {
       {isAuthenticated ? (
       <div className="navButtonsone Logged">
         <div className="navLoggedButtons">
-            <a id="navLogout" href="/postman">Logout</a>
+            <a id="navLogout" onClick={handleSignOut}>Logout</a>
             <p>Hello! Recruiter</p>
         </div>
       <div className="userdpbox active"><img src={userdppic} alt="userdp" id='userdp ' /></div>

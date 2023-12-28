@@ -23,7 +23,7 @@ const Login = () => {
       'POST',
       formData,
       'Logged In successfully!',
-      () => navigate('/jobpost/addJob')
+      () => navigate('/dashboard')
       );
     };
     
