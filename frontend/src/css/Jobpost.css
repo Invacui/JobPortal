@@ -1,5 +1,4 @@
 .jobpost_main_body{
-    border: 2px solid yellow;
     height: 100vh;
     padding: 2vh 5vw;
     background-image: url("../asset/jobback.png");
@@ -13,7 +12,6 @@
 }
 .jobpostformdiv{
     display: flex;
-    border: 4px solid red;
     width: fit-content;
     position: relative;
 }

@@ -160,7 +160,7 @@ if (loading) {
       </tr>
       <tr>
         <td><label htmlFor="jobPosition">Job Position</label></td>
-        <td><input type="text" id="jobPosition" name="jobPosition" value={formData.jobPosition} onChange={handleChange} placeholder="Enter job position"/></td>
+        <td><input type="text" id="jobPositionone" name="jobPosition" value={formData.jobPosition} onChange={handleChange} placeholder="Enter job position"/></td>
       </tr>
       <tr>
         <td><label htmlFor="monthlySalary">Monthly Salary</label></td>
@@ -188,7 +188,7 @@ if (loading) {
       </tr>
       <tr>
         <td><label htmlFor="location">Location</label></td>
-        <td><input type="text" id="location" name="location" value={formData.location} onChange={handleChange} placeholder="Enter Amount in rupees"/></td>
+        <td><input type="text" id="location" name="location" value={formData.location} onChange={handleChange} placeholder="Enter the location"/></td>
       </tr>
       <tr className="txtarea">
         <td><label htmlFor="jobDescription">Job Description</label></td>
