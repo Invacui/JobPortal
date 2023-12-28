@@ -63,7 +63,7 @@ jobroute.post("/addJob",IsLoggedIn, async (req, res) => {
   }
 });
 //Update Job Post
-jobroute.put('/updateJob/:jobId', IsLoggedIn, async (req, res) => {
+jobroute.put('/:jobId', IsLoggedIn, async (req, res) => {
     try {
       const { jobId } = req.params;
       const updatedJob = req.body; // Assuming the updated job details are sent in the request body
@@ -87,6 +87,22 @@ jobroute.put('/updateJob/:jobId', IsLoggedIn, async (req, res) => {
       });
     }
   });
+
+  //View all jobs
+  jobroute.get('/:id', async (req, res) => {
+    try {
+      const jobId = req.params.id;
+      const job = await Jobprop.findById(jobId);
   
+      if (!job) {
+        return res.status(404).json({ message: 'Job not found' });
+      }
+  
+      res.json({ job });
+    } catch (error) {
+      console.error('Error fetching job details:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
 
 module.exports = jobroute;

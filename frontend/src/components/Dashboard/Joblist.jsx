@@ -42,7 +42,10 @@ const Joblist = ({ jobs , isAuthenticated,setisAuthenticated }) => {
         fetchJobData();
     }, []);
     function handlejobview(id){
-        navigate(`/jobview/:${id}`)
+        navigate(`/jobview/${id}`)
+    }
+    function handlejobedit(id){
+        navigate(`/jobpost/${id}`)
     }
     return (
         <div>
@@ -79,7 +82,7 @@ const Joblist = ({ jobs , isAuthenticated,setisAuthenticated }) => {
                                 ))}
                             </div>
                             <div id="jobrender_b2_s1">
-                                <button type='submit' id='editjobs' >Edit job</button>
+                                <button type='submit' id='editjobs'onClick={() => handlejobedit(job._id)} >Edit job</button>
                                 <button type='submit'id='veiwdetails' onClick={() => handlejobview(job._id)}>View details</button>
                             </div>
                         </div>
